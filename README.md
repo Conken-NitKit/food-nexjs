@@ -1,73 +1,154 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## 認証の設計
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## APIドキュメント
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+### Store - ストア関連のAPI
+```
+- method: POST
+- path: /stores
+- description: ログインしているユーザーが確認可能なストアの一覧
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+- method: POST
+- path: /stores
+- description: ストアを開設
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+- method: GET
+- path: /stores/{storeId}
+- description: ストアを1件取得
 ```
 
-## Support
+```
+- method: PUT
+- path: /stores/{storeId}
+- description: ストア更新
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Product - 商品関連のAPI
 
-## Stay in touch
+```
+- method: GET
+- path: /stores/{storeId}/products
+- description: ストアの商品一覧
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+- method: POST
+- path: /stores/{storeId}/products
+- description: ストアに商品を追加
+```
 
-## License
+```
+- method: GET
+- path: /products/{productId}
+- description: 商品を1件取得
+```
 
-Nest is [MIT licensed](LICENSE).
+```
+- method: PUT
+- path: /products/{productId}
+- description: 商品更新
+```
+
+### Order - 商品注文関連のAPI
+
+```
+- method: GET
+- path: /stores/{storeId}/orders
+- description: ストアの商品一覧
+```
+
+```
+- method: POST
+- path: /stores/{storeId}/orders
+- description: ストアに商品を追加
+```
+
+```
+- method: GET
+- path: /products/{productId}
+- description: 商品の注文内容1件を取得
+```
+
+```
+- method: PUT
+- path: /products/{productId}
+- description: 商品の注文内容を更新する
+```
+
+```
+- method: POST
+- path: /products/{productId}/accept
+- description: 商品の注文状況を「提供済み」に変更する
+```
+
+```
+- method: POST
+- path: /products/{productId}/cancel
+- description: 商品の注文状況を「キャンセル済み」に変更する
+```
+
+```
+- method: POST
+- path: /products/{productId}/restore
+- description: 商品の注文状況を「提供待ち」に変更する
+```
+
+### Collaborator - 共同管理人関連のAPI
+
+```
+- method: GET
+- path: /stores/{storeId}/users/
+- description: ストアの共同管理人一覧
+```
+
+```
+- method: POST
+- path: /stores/{storeId}/users/{userId}
+- description: ストアに共同管理人を追加
+```
+
+```
+- method: DELETE
+- path: /stores/{storeId}/users/{userId}
+- description: ストアに共同管理人から削除
+```
+
+```
+- method: DELETE
+- path: /stores/{storeId}/users/me
+- description: 自身をストアに共同管理人から削除
+```
+
+### Sales - 売上関連のAPI
+
+```
+- method: GET
+- path: /stores/{storeId}/sales_timeline
+- description: ストアの商品一覧
+```
+
+### Auth - 
+
+```
+- method: GET
+- path: /users/me
+- description: ユーザ本人取得
+```
+
+```
+- method: GET
+- path: /users/userId
+- description: ユーザ1件取得
+```
+
+```
+- method: PUT
+- path: /users/userId
+- description: ユーザ1件更新
+```
